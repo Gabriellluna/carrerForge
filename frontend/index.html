@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerForge</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <span class="logo-icon">⚙️</span>
+            <span class="logo-text">CareerForge</span>
+        </div>
+        <div class="navbar-buttons">
+            <button class="nav-btn active" onclick="mostrarSecao('pessoas')">Pessoas</button>
+            <button class="nav-btn" disabled>Habilidades</button>
+            <button class="nav-btn" disabled>Objetivo</button>
+        </div>
+    </nav>
+
+    <!-- ===== ÁREA PRINCIPAL ===== -->
+    <main class="container">
+
+        <!-- SEÇÃO: PESSOAS -->
+        <section id="secao-pessoas" class="secao">
+            <div class="secao-header">
+                <h1 class="secao-titulo">Pessoas Cadastradas</h1>
+                <button class="btn-primario" onclick="abrirModal('pessoa')">
+                    + Cadastrar Pessoa
+                </button>
+            </div>
+
+            <!-- Lista de pessoas vem aqui via JavaScript -->
+            <div id="lista-pessoas" class="lista-pessoas">
+                <p class="loading-text">Carregando pessoas...</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== MODAL CENTRALIZADO ===== -->
+    <div id="overlay" class="overlay" onclick="fecharModal()"></div>
+
+    <div id="modal" class="modal">
+        <div class="modal-header">
+            <h2 id="modal-titulo">Cadastrar Pessoa</h2>
+            <button class="modal-fechar" onclick="fecharModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div id="modal-conteudo"></div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
