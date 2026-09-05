@@ -26,14 +26,8 @@ def get_pessoa(pessoa_id: int):
 
 @router.post("/pessoas")
 def post_pessoa(pessoa: dict):
-    """
-    Cria uma nova pessoa.
-    Sem models (Pydantic), o corpo da requisição chega como dict.
-    A validação dos campos é feita aqui no controller.
-    """
     nome = pessoa.get("nome")
     email = pessoa.get("email")
-
     if not nome or not email:
         raise HTTPException(
             status_code=422,

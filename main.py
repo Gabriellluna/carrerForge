@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from controllers.pessoa_controller import router as pessoa_router
 from controllers.habilidades_controller import router as habilidades_router
+from controllers.pessoa_habilidades import router as pessoa_habilidades_router
+from controllers.habilidades_desejadas import router as habilidades_desejadas_router
 from database.database import init_db
 
 app = FastAPI(title="CareerForge API", version="1.0.0")
@@ -17,12 +19,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Registra as rotas de pessoa com prefixo /api
-# Fica: /api/pessoas, /api/pessoas/{id}, etc.
 app.include_router(pessoa_router, prefix="/api")
 app.include_router(habilidades_router, prefix="/api")
+app.include_router(pessoa_habilidades_router, prefix="/api")
+app.include_router(habilidades_desejadas_router, prefix="/api")
 
-# Serve os arquivos do frontend (CSS, JS) na rota /static
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 @app.get("/")

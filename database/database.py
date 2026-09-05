@@ -50,6 +50,21 @@ def init_db():
         )
     """)
 
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS habilidades_desejadas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            usuario_id INT NOT NULL,
+            habilidade_id INT NOT NULL,
+            nivel_desejado INTEGER NOT NULL,
+
+            FOREIGN KEY (usuario_id)
+                REFERENCES usuarios(id)
+            
+            FOREIGN KEY (habilidade_id)
+                REFERENCES habilidades(id)
+        )
+    """)
+
 
     # 4. Inserção de categorias
     categorias = [

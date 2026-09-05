@@ -1,59 +1,360 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>CareerForge</title>
-    <link rel="stylesheet" href="/static/style.css">
+
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+
 </head>
+
+
 <body>
 
-    <!-- ===== NAVBAR ===== -->
+
+    <!-- ========================= -->
+    <!-- NAVBAR -->
+    <!-- ========================= -->
+
     <nav class="navbar">
+
         <div class="navbar-logo">
-            <span class="logo-icon">⚙️</span>
-            <span class="logo-text">CareerForge</span>
+
+            <span class="logo-icon">
+                ⚙️
+            </span>
+
+            <span class="logo-text">
+                CareerForge
+            </span>
+
         </div>
+
+
         <div class="navbar-buttons">
-            <button class="nav-btn active" onclick="mostrarSecao('pessoas')">Pessoas</button>
-            <button class="nav-btn" disabled>Habilidades</button>
-            <button class="nav-btn" disabled>Objetivo</button>
+
+            <button
+                id="nav-pessoas"
+                class="nav-btn active"
+                onclick="mostrarSecao('pessoas')"
+            >
+                Pessoas
+            </button>
+
+
+            <button
+                id="nav-roadmap"
+                class="nav-btn"
+                onclick="mostrarSecao('roadmap')"
+            >
+                Roadmap
+            </button>
+
+
+            <button
+                class="nav-btn"
+                disabled
+            >
+                Habilidades
+            </button>
+
+
+            <button
+                class="nav-btn"
+                disabled
+            >
+                Objetivo
+            </button>
+
         </div>
+
     </nav>
 
-    <!-- ===== ÁREA PRINCIPAL ===== -->
+
+
+    <!-- ========================= -->
+    <!-- ÁREA PRINCIPAL -->
+    <!-- ========================= -->
+
     <main class="container">
 
+
+        <!-- ========================= -->
         <!-- SEÇÃO: PESSOAS -->
-        <section id="secao-pessoas" class="secao">
+        <!-- ========================= -->
+
+        <section
+            id="secao-pessoas"
+            class="secao ativa"
+        >
+
             <div class="secao-header">
-                <h1 class="secao-titulo">Pessoas Cadastradas</h1>
-                <button class="btn-primario" onclick="abrirModal('pessoa')">
+
+                <h1 class="secao-titulo">
+                    Pessoas Cadastradas
+                </h1>
+
+
+                <button
+                    class="btn-primario"
+                    onclick="abrirModal('pessoa')"
+                >
                     + Cadastrar Pessoa
                 </button>
+
             </div>
 
-            <!-- Lista de pessoas vem aqui via JavaScript -->
-            <div id="lista-pessoas" class="lista-pessoas">
-                <p class="loading-text">Carregando pessoas...</p>
+
+            <div
+                id="lista-pessoas"
+                class="lista-pessoas"
+            >
+
+                <p class="loading-text">
+                    Carregando pessoas...
+                </p>
+
             </div>
+
+        </section>
+
+
+
+        <!-- ========================= -->
+        <!-- SEÇÃO: ROADMAP -->
+        <!-- ========================= -->
+
+        <section
+            id="secao-roadmap"
+            class="secao"
+        >
+
+            <div class="secao-header">
+
+                <h1 class="secao-titulo">
+                    Roadmap Profissional
+                </h1>
+
+            </div>
+
+
+            <div class="roadmap-container">
+
+
+                <!-- ========================= -->
+                <!-- PERFIL -->
+                <!-- ========================= -->
+
+                <div class="roadmap-perfil">
+
+                    <h2>
+                        Perfil
+                    </h2>
+
+
+                    <div id="roadmap-perfil">
+
+                        <p class="lista-vazia">
+                            Selecione uma pessoa para visualizar o Roadmap.
+                        </p>
+
+                    </div>
+
+
+                    <div class="roadmap-separador"></div>
+
+
+                    <h3>
+                        Habilidades atuais
+                    </h3>
+
+
+                    <div
+                        id="roadmap-habilidades-atuais"
+                        class="roadmap-lista"
+                    >
+
+                        <p class="lista-vazia">
+                            Nenhuma habilidade carregada.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ========================= -->
+                <!-- HABILIDADES DESEJADAS -->
+                <!-- ========================= -->
+
+                <div class="roadmap-habilidades">
+
+                    <h2>
+                        Habilidades desejadas
+                    </h2>
+
+
+                    <p class="roadmap-descricao">
+
+                        Adicione as habilidades que você deseja
+                        desenvolver e o nível que pretende alcançar.
+
+                    </p>
+
+
+                    <!-- LISTA -->
+
+                    <div
+                        id="lista-habilidades-desejadas"
+                        class="lista-habilidades-selecionadas"
+                    >
+
+                        <p class="lista-vazia">
+                            Nenhuma habilidade desejada adicionada.
+                        </p>
+
+                    </div>
+
+
+                    <!-- ADICIONAR -->
+
+                    <div class="adicionar-habilidade">
+
+                        <select
+                            id="select-habilidade-desejada"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Selecione uma habilidade
+                            </option>
+
+                        </select>
+
+
+                        <select
+                            id="select-nivel-desejado"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Nível desejado
+                            </option>
+
+                            <option value="1">
+                                1 - Iniciante
+                            </option>
+
+                            <option value="2">
+                                2 - Básico
+                            </option>
+
+                            <option value="3">
+                                3 - Intermediário
+                            </option>
+
+                            <option value="4">
+                                4 - Avançado
+                            </option>
+
+                            <option value="5">
+                                5 - Especialista
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="button"
+                            class="btn-adicionar-habilidade"
+                            onclick="adicionarHabilidadeDesejada()"
+                        >
+                            + Adicionar
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="roadmap-erro"
+                        class="form-erro"
+                    ></div>
+
+
+                    <button
+                        type="button"
+                        class="btn-salvar-roadmap"
+                        onclick="salvarHabilidadesDesejadas()"
+                    >
+                        Salvar Roadmap
+                    </button>
+
+                </div>
+
+            </div>
+
         </section>
 
     </main>
 
-    <!-- ===== MODAL CENTRALIZADO ===== -->
-    <div id="overlay" class="overlay" onclick="fecharModal()"></div>
 
-    <div id="modal" class="modal">
+
+    <!-- ========================= -->
+    <!-- MODAL -->
+    <!-- ========================= -->
+
+    <div
+        id="overlay"
+        class="overlay"
+        onclick="fecharModal()"
+    ></div>
+
+
+    <div
+        id="modal"
+        class="modal"
+    >
+
         <div class="modal-header">
-            <h2 id="modal-titulo">Cadastrar Pessoa</h2>
-            <button class="modal-fechar" onclick="fecharModal()">✕</button>
+
+            <h2 id="modal-titulo">
+                Cadastrar Pessoa
+            </h2>
+
+
+            <button
+                class="modal-fechar"
+                onclick="fecharModal()"
+            >
+                ✕
+            </button>
+
         </div>
+
+
         <div class="modal-body">
+
             <div id="modal-conteudo"></div>
+
         </div>
+
     </div>
 
+
     <script src="/static/script.js"></script>
+
 </body>
+
 </html>
