@@ -6,6 +6,7 @@ const API_HABILIDADES_DESEJADAS ='/api/habilidades-desejadas';
 let habilidadesSelecionadas = [];
 let habilidadesDesejadas = [];
 let usuarioAtualId = null;
+let pessoaEmEdicaoId = null;
 
 document.addEventListener(
     'DOMContentLoaded',
@@ -62,6 +63,14 @@ async function carregarPessoas() {
 
 
                         <div class="pessoa-acoes">
+
+                            <button
+                                class="btn-icone"
+                                onclick="abrirEdicaoPessoa(${pessoa.id})"
+                            >
+                                Editar
+                            </button>
+
 
                             <button
                                 class="btn-icone"
@@ -199,12 +208,142 @@ async function excluirPessoa(id) {
 
 }
 
-function abrirModal(tipo) {
+async function abrirEdicaoPessoa(id) {
+    try {
+        const resposta = await fetch(`${API_PESSOAS}/${id}`);
+        if (!resposta.ok) {
+            throw new Error('Erro ao buscar pessoa');
+        }
+
+        const pessoa = await resposta.json();
+        abrirModal('editar-pessoa', pessoa);
+
+    } catch (erro) {
+        alert('Erro ao carregar dados da pessoa.');
+        console.error('Erro:', erro);
+    }
+}
+
+async function salvarEdicaoPessoa() {
+
+    const nome = document.getElementById('input-nome-editar').value.trim();
+    const email = document.getElementById('input-email-editar').value.trim();
+    const erroEl = document.getElementById('form-erro');
+
+    if (!nome || !email) {
+        erroEl.textContent = 'Preencha nome e e-mail.';
+        erroEl.classList.add('ativo');
+        return;
+    }
+
+    try {
+        const resposta = await fetch(
+            `${API_PESSOAS}/${pessoaEmEdicaoId}`,
+            {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome, email })
+            }
+        );
+
+        if (!resposta.ok) {
+            const dados = await resposta.json();
+            throw new Error(dados.detail || 'Erro ao atualizar pessoa');
+        }
+
+        fecharModal();
+        await carregarPessoas();
+
+    } catch (erro) {
+        erroEl.textContent = 'Erro: ' + erro.message;
+        erroEl.classList.add('ativo');
+    }
+}
+
+function abrirModal(tipo, pessoa) {
 
     const overlay = document.getElementById('overlay');
     const modal = document.getElementById('modal');
     const titulo = document.getElementById('modal-titulo');
     const conteudo = document.getElementById('modal-conteudo');
+
+    if (tipo === 'editar-pessoa') {
+        pessoaEmEdicaoId = pessoa.id;
+        titulo.textContent = 'Editar Pessoa';
+        conteudo.innerHTML = `
+
+            <div class="form-grupo">
+
+                <label
+                    class="form-label"
+                    for="input-nome-editar"
+                >
+                    Nome
+                </label>
+
+                <input
+                    type="text"
+                    id="input-nome-editar"
+                    class="form-input"
+                    value="${pessoa.nome}"
+                    maxlength="100"
+                >
+
+            </div>
+
+
+            <div class="form-grupo">
+
+                <label
+                    class="form-label"
+                    for="input-email-editar"
+                >
+                    E-mail
+                </label>
+
+                <input
+                    type="email"
+                    id="input-email-editar"
+                    class="form-input"
+                    value="${pessoa.email}"
+                    maxlength="150"
+                >
+
+            </div>
+
+
+            <div
+                id="form-erro"
+                class="form-erro"
+            ></div>
+
+
+            <div class="form-botoes">
+
+                <button
+                    class="btn-cancelar"
+                    onclick="fecharModal()"
+                >
+                    Cancelar
+                </button>
+
+
+                <button
+                    class="btn-salvar"
+                    onclick="salvarEdicaoPessoa()"
+                >
+                    Salvar
+                </button>
+
+            </div>
+
+        `;
+
+        overlay.classList.add('ativo');
+        modal.classList.add('ativo');
+        return;
+    }
+
     if (tipo === 'pessoa') {
         habilidadesSelecionadas = [];
         titulo.textContent ='Cadastrar Pessoa';
