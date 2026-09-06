@@ -3,7 +3,7 @@ from database.database import get_connection
 def listar_pessoa_habilidades(usuario_id: int):
     connection = get_connection()
     pessoa_habilidades = connection.execute("""
-    SELECT pessoa_habilidades.nivel_atual as nivel_atual, habilidades.nome as habilidade
+    SELECT pessoa_habilidades.nivel_atual as nivel_atual, habilidades.id as habilidade_id, habilidades.nome as habilidade
     FROM pessoa_habilidades
     INNER JOIN habilidades on pessoa_habilidades.habilidade_id = habilidades.id 
     where usuario_id = ? """, (usuario_id,)).fetchall()

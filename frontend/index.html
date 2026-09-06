@@ -5,17 +5,17 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>CareerForge</title>
 
-    <link
-        rel="stylesheet"
-        href="/static/style.css"
-    >
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script>
+        if (localStorage.getItem('tema') === 'escuro') {
+            document.documentElement.dataset.tema = 'escuro';
+        }
+    </script>
 
 </head>
 
@@ -44,37 +44,39 @@
 
         <div class="navbar-buttons">
 
-            <button
-                id="nav-pessoas"
-                class="nav-btn active"
-                onclick="mostrarSecao('pessoas')"
-            >
+            <button id="nav-pessoas" class="nav-btn active" onclick="mostrarSecao('pessoas')">
                 Pessoas
             </button>
 
 
-            <button
-                id="nav-roadmap"
-                class="nav-btn"
-                onclick="mostrarSecao('roadmap')"
-            >
+            <button id="nav-roadmap" class="nav-btn" onclick="mostrarSecao('roadmap')">
                 Roadmap
             </button>
 
 
-            <button
-                class="nav-btn"
-                disabled
-            >
+            <button class="nav-btn" disabled>
                 Habilidades
+                <span class="badge-em-breve">Em breve</span>
             </button>
 
 
-            <button
-                class="nav-btn"
-                disabled
-            >
+            <button class="nav-btn" disabled>
                 Objetivo
+                <span class="badge-em-breve">Em breve</span>
+            </button>
+
+        </div>
+
+
+        <div class="navbar-direita">
+
+            <button id="btn-tema" class="btn-tema" onclick="alternarTema()">
+                Tema escuro
+            </button>
+
+
+            <button class="btn-sobre" onclick="abrirSobre()">
+                Sobre o projeto
             </button>
 
         </div>
@@ -94,36 +96,57 @@
         <!-- SEÇÃO: PESSOAS -->
         <!-- ========================= -->
 
-        <section
-            id="secao-pessoas"
-            class="secao ativa"
-        >
+        <section id="secao-pessoas" class="secao ativa">
 
             <div class="secao-header">
 
-                <h1 class="secao-titulo">
-                    Pessoas Cadastradas
-                </h1>
+                <div>
+
+                    <h1 class="secao-titulo">
+                        Pessoas Cadastradas
+                    </h1>
+
+                    <p id="pessoas-contador" class="secao-subtitulo"></p>
+
+                </div>
 
 
-                <button
-                    class="btn-primario"
-                    onclick="abrirModal('pessoa')"
-                >
+                <button class="btn-primario" onclick="abrirModal('pessoa')">
                     + Cadastrar Pessoa
                 </button>
 
             </div>
 
 
-            <div
-                id="lista-pessoas"
-                class="lista-pessoas"
-            >
+            <input type="text" id="input-busca-pessoa" class="form-input busca-pessoa"
+                placeholder="Buscar por nome ou e-mail" oninput="filtrarPessoas()">
 
-                <p class="loading-text">
-                    Carregando pessoas...
-                </p>
+
+            <div class="tabela-container">
+
+                <table class="tabela-pessoas">
+
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>ID</th>
+                            <th>Idade</th>
+                            <th>Cargo atual</th>
+                            <th>Objetivo profissional</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="lista-pessoas">
+                        <tr>
+                            <td colspan="7" class="loading-text">
+                                Carregando pessoas...
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
 
             </div>
 
@@ -135,17 +158,12 @@
         <!-- SEÇÃO: ROADMAP -->
         <!-- ========================= -->
 
-        <section
-            id="secao-roadmap"
-            class="secao"
-        >
+        <section id="secao-roadmap" class="secao">
 
-            <div class="secao-header">
-
-                <h1 class="secao-titulo">
-                    Roadmap Profissional
-                </h1>
-
+            <div class="breadcrumb">
+                <a href="#" onclick="mostrarSecao('pessoas'); return false;">Pessoas</a>
+                <span>/</span>
+                <span>Roadmap</span>
             </div>
 
 
@@ -153,156 +171,157 @@
 
 
                 <!-- ========================= -->
-                <!-- PERFIL -->
+                <!-- COLUNA PRINCIPAL -->
                 <!-- ========================= -->
 
-                <div class="roadmap-perfil">
+                <div class="roadmap-coluna-principal">
 
-                    <h2>
-                        Perfil
-                    </h2>
+                    <div class="cartao-pessoa">
 
+                        <div id="roadmap-perfil" class="cartao-pessoa-info">
+                            <p class="lista-vazia">
+                                Selecione uma pessoa na tela "Pessoas" para visualizar o Roadmap.
+                            </p>
+                        </div>
 
-                    <div id="roadmap-perfil">
-
-                        <p class="lista-vazia">
-                            Selecione uma pessoa para visualizar o Roadmap.
-                        </p>
-
-                    </div>
-
-
-                    <div class="roadmap-separador"></div>
-
-
-                    <h3>
-                        Habilidades atuais
-                    </h3>
-
-
-                    <div
-                        id="roadmap-habilidades-atuais"
-                        class="roadmap-lista"
-                    >
-
-                        <p class="lista-vazia">
-                            Nenhuma habilidade carregada.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ========================= -->
-                <!-- HABILIDADES DESEJADAS -->
-                <!-- ========================= -->
-
-                <div class="roadmap-habilidades">
-
-                    <h2>
-                        Habilidades desejadas
-                    </h2>
-
-
-                    <p class="roadmap-descricao">
-
-                        Adicione as habilidades que você deseja
-                        desenvolver e o nível que pretende alcançar.
-
-                    </p>
-
-
-                    <!-- LISTA -->
-
-                    <div
-                        id="lista-habilidades-desejadas"
-                        class="lista-habilidades-selecionadas"
-                    >
-
-                        <p class="lista-vazia">
-                            Nenhuma habilidade desejada adicionada.
-                        </p>
-
-                    </div>
-
-
-                    <!-- ADICIONAR -->
-
-                    <div class="adicionar-habilidade">
-
-                        <select
-                            id="select-habilidade-desejada"
-                            class="form-select"
-                        >
-
-                            <option value="">
-                                Selecione uma habilidade
-                            </option>
-
-                        </select>
-
-
-                        <select
-                            id="select-nivel-desejado"
-                            class="form-select"
-                        >
-
-                            <option value="">
-                                Nível desejado
-                            </option>
-
-                            <option value="1">
-                                1 - Iniciante
-                            </option>
-
-                            <option value="2">
-                                2 - Básico
-                            </option>
-
-                            <option value="3">
-                                3 - Intermediário
-                            </option>
-
-                            <option value="4">
-                                4 - Avançado
-                            </option>
-
-                            <option value="5">
-                                5 - Especialista
-                            </option>
-
-                        </select>
-
-
-                        <button
-                            type="button"
-                            class="btn-adicionar-habilidade"
-                            onclick="adicionarHabilidadeDesejada()"
-                        >
-                            + Adicionar
+                        <button type="button" class="btn-trocar-pessoa" onclick="mostrarSecao('pessoas')">
+                            Trocar pessoa
                         </button>
 
                     </div>
 
 
-                    <div
-                        id="roadmap-erro"
-                        class="form-erro"
-                    ></div>
+                    <div class="roadmap-card">
+
+                        <h2>Habilidades atuais</h2>
+                        <p class="roadmap-descricao">Nível declarado no cadastro, de 1 a 5.</p>
+
+                        <div id="roadmap-habilidades-atuais" class="roadmap-lista">
+                            <p class="lista-vazia">
+                                Nenhuma habilidade carregada.
+                            </p>
+                        </div>
+
+                    </div>
 
 
-                    <button
-                        type="button"
-                        class="btn-salvar-roadmap"
-                        onclick="salvarHabilidadesDesejadas()"
-                    >
-                        Salvar Roadmap
-                    </button>
+                    <div class="roadmap-card">
+
+                        <h2>Habilidades desejadas</h2>
+                        <p class="roadmap-descricao">
+                            Escolha a habilidade e o nível-alvo. A estimativa é recalculada a cada item.
+                        </p>
+
+                        <div class="desejada-cabecalho">
+                            <span class="habilidades-titulo">Habilidade</span>
+                            <span class="habilidades-titulo">Nível desejado</span>
+                        </div>
+
+                        <div class="desejada-picker">
+
+                            <select id="select-habilidade-desejada" class="form-select">
+                                <option value="">Selecione uma habilidade</option>
+                            </select>
+
+                            <select id="select-nivel-desejado" class="form-select">
+                                <option value="1">Nível 1</option>
+                                <option value="2">Nível 2</option>
+                                <option value="3">Nível 3</option>
+                                <option value="4">Nível 4</option>
+                                <option value="5">Nível 5</option>
+                            </select>
+
+                            <button type="button" class="btn-adicionar-habilidade"
+                                onclick="adicionarHabilidadeDesejada()">
+                                Adicionar
+                            </button>
+
+                        </div>
+
+
+                        <div id="lista-habilidades-desejadas">
+                            <p class="lista-vazia">
+                                Nenhuma habilidade desejada adicionada.
+                            </p>
+                        </div>
+
+
+                        <div class="roadmap-separador"></div>
+
+                        <p class="formula-texto">
+                            Cálculo: (nível desejado − nível atual) × horas por nível de cada habilidade.
+                        </p>
+
+                        <div id="roadmap-erro" class="form-erro"></div>
+
+                        <button type="button" class="btn-salvar-roadmap" onclick="salvarHabilidadesDesejadas()">
+                            Salvar roadmap
+                        </button>
+
+                    </div>
 
                 </div>
 
+
+                <!-- ========================= -->
+                <!-- COLUNA LATERAL -->
+                <!-- ========================= -->
+
+                <div class="roadmap-coluna-lateral">
+
+                    <div class="cartao-estimativa">
+
+                        <span class="estimativa-label">Estimativa total</span>
+                        <div id="estimativa-total-horas" class="estimativa-total">0 h</div>
+                        <div id="estimativa-total-meses" class="estimativa-meses">
+                            Adicione habilidades desejadas
+                        </div>
+
+                        <div class="estimativa-separador"></div>
+
+                        <div class="estimativa-linha">
+                            <span>Carga semanal</span>
+                            <span>
+                                <input type="number" id="input-horas-semana" value="8" min="1" max="80"
+                                    oninput="recalcularEstimativa()"> h
+                            </span>
+                        </div>
+
+                        <div class="estimativa-linha">
+                            <span>Duração</span>
+                            <span id="estimativa-duracao">—</span>
+                        </div>
+
+                        <div class="estimativa-linha">
+                            <span>Conclusão prevista</span>
+                            <span id="estimativa-conclusao">—</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="roadmap-card">
+                        <h3>Distribuição do esforço</h3>
+                        <div id="distribuicao-esforco">
+                            <p class="lista-vazia">
+                                Adicione habilidades desejadas para ver a distribuição.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="roadmap-card roadmap-estimado">
+                <h2>Roadmap estimado</h2>
+                <p class="roadmap-descricao">
+                    Fases organizadas pelo menor esforço até o nível-alvo.
+                </p>
+                <p class="lista-vazia">
+                    Em breve — essa etapa depende de um cálculo de fases que ainda não existe na API.
+                </p>
             </div>
 
         </section>
@@ -315,29 +334,25 @@
     <!-- MODAL -->
     <!-- ========================= -->
 
-    <div
-        id="overlay"
-        class="overlay"
-        onclick="fecharModal()"
-    ></div>
+    <div id="overlay" class="overlay" onclick="fecharModal()"></div>
 
 
-    <div
-        id="modal"
-        class="modal"
-    >
+    <div id="modal" class="modal">
 
         <div class="modal-header">
 
-            <h2 id="modal-titulo">
-                Cadastrar Pessoa
-            </h2>
+            <div>
+
+                <h2 id="modal-titulo">
+                    Cadastrar Pessoa
+                </h2>
+
+                <p id="modal-subtitulo" class="modal-subtitulo"></p>
+
+            </div>
 
 
-            <button
-                class="modal-fechar"
-                onclick="fecharModal()"
-            >
+            <button class="modal-fechar" onclick="fecharModal()">
                 ✕
             </button>
 
