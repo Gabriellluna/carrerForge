@@ -28,21 +28,27 @@ def get_pessoa(pessoa_id: int):
 def post_pessoa(pessoa: dict):
     nome = pessoa.get("nome")
     email = pessoa.get("email")
+    idade = pessoa.get("idade")
+    cargo_atual = pessoa.get("cargo_atual")
+    objetivo_profissional = pessoa.get("objetivo_profissional")
     if not nome or not email:
         raise HTTPException(
             status_code=422,
             detail="Os campos 'nome' e 'email' são obrigatórios"
         )
 
-    return criar_pessoa(nome, email)
+    return criar_pessoa(nome, email, idade, cargo_atual, objetivo_profissional)
 
 @router.put("/pessoas/{pessoa_id}")
 def put_pessoa(pessoa_id: int, pessoa: dict):
     """Atualiza os dados de uma pessoa existente."""
     nome = pessoa.get("nome")
     email = pessoa.get("email")
+    idade = pessoa.get("idade")
+    cargo_atual = pessoa.get("cargo_atual")
+    objetivo_profissional = pessoa.get("objetivo_profissional")
 
-    resultado = atualizar_pessoa(pessoa_id, nome, email)
+    resultado = atualizar_pessoa(pessoa_id, nome, email, idade, cargo_atual, objetivo_profissional)
     if not resultado:
         raise HTTPException(status_code=404, detail="Pessoa não encontrada")
     return resultado
