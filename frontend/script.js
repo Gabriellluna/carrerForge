@@ -1388,60 +1388,74 @@ function renderizarHabilidadesDesejadas() {
 async function salvarHabilidadesDesejadas() {
 
     const erroEl = document.getElementById('roadmap-erro');
+
     if (!usuarioAtualId) {
         erroEl.textContent = 'Nenhum usuário selecionado.';
         erroEl.classList.add('ativo');
         return;
     }
+
     if (habilidadesDesejadas.length === 0) {
         erroEl.textContent = 'Adicione pelo menos uma habilidade desejada.';
         erroEl.classList.add('ativo');
         return;
     }
+
+    const habilidadesNovas = habilidadesDesejadas.filter(habilidade => {
+        const jaExiste = habilidadesDesejadasExistentesIds.includes(
+            habilidade.habilidade_id
+        );
+        return !jaExiste;
+    });
+
     try {
-        const habilidadesNovas = habilidadesDesejadas.filter(habilidade => !habilidadesDesejadasExistentesIds.includes(habilidade.habilidade_id));
+
         if (habilidadesNovas.length === 0) {
             erroEl.textContent = "Nenhuma habilidade nova para salvar.";
-            erroEl.classList.add("ativo")
+            erroEl.classList.add("ativo");
             return;
         }
 
         for (const habilidade of habilidadesNovas) {
-            const resposta =
-                await fetch(API_HABILIDADES_DESEJADAS,
-                    {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            usuario_id: usuarioAtualId,
-                            habilidade_id: habilidade.habilidade_id,
-                            nivel_desejado: habilidade.nivel_desejado
-                        })
+            const resposta = await fetch(
+                API_HABILIDADES_DESEJADAS,
+                {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        usuario_id: usuarioAtualId,
+                        habilidade_id: habilidade.habilidade_id,
+                        nivel_desejado: habilidade.nivel_desejado
+                    })
+                }
+            );
 
-                    }
-                );
             if (!resposta.ok) {
                 const dados = await resposta.json();
                 throw new Error(dados.detail || 'Erro ao salvar habilidade desejada');
             }
+            habilidadesDesejadasExistentesIds.push(
+                habilidade.habilidade_id
+            );
         }
-
 
         erroEl.textContent = 'Roadmap salvo com sucesso!';
         erroEl.classList.remove('ativo');
 
     } catch (erro) {
-        console.error('Erro ao salvar Roadmap:', erro);
+
+        console.error(
+            'Erro ao salvar Roadmap:',
+            erro
+        );
+
         erroEl.textContent = 'Erro: ' + erro.message;
         erroEl.classList.add('ativo');
     }
 }
 
-
 async function carregarHabilidadesDesejadas(usuarioId) {
 
     try {
-
         const resposta = await fetch(
             `${API_HABILIDADES_DESEJADAS}/${usuarioId}`
         );
@@ -1449,7 +1463,6 @@ async function carregarHabilidadesDesejadas(usuarioId) {
         if (resposta.status === 404) {
             habilidadesDesejadas = [];
             habilidadesDesejadasExistentesIds = [];
-
             renderizarHabilidadesDesejadas();
             recalcularEstimativa();
             return;
@@ -1464,14 +1477,12 @@ async function carregarHabilidadesDesejadas(usuarioId) {
         habilidadesDesejadasExistentesIds =
             habilidades.map(habilidade => habilidade.habilidade_id);
 
-
         habilidadesDesejadas =
             habilidades.map(habilidade => ({
                 habilidade_id: habilidade.habilidade_id,
                 nivel_desejado: habilidade.nivel_desejado,
                 nome: habilidade.habilidade || habilidade.nome
             }));
-
 
         renderizarHabilidadesDesejadas();
         recalcularEstimativa();
@@ -1486,7 +1497,6 @@ async function carregarHabilidadesDesejadas(usuarioId) {
     }
 
 }
-
 
 function obterIniciais(nome) {
 
