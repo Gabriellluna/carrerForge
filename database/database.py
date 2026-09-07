@@ -2,7 +2,8 @@ import sqlite3
 
 def get_connection():
     conn = sqlite3.connect("carrerForge.db")
-    conn.row_factory = sqlite3.Row    # ← ESTA LINHA
+    conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA foreign_keys = ON")    
     return conn
 
 def init_db():
@@ -59,6 +60,7 @@ def init_db():
 
             FOREIGN KEY (usuario_id)
                 REFERENCES usuarios(id)
+                ON DELETE CASCADE,
             
             FOREIGN KEY (habilidade_id)
                 REFERENCES habilidades(id)
@@ -74,9 +76,12 @@ def init_db():
 
             FOREIGN KEY (usuario_id)
                 REFERENCES usuarios(id)
+                ON DELETE CASCADE,
             
             FOREIGN KEY (habilidade_id)
-                REFERENCES habilidades(id)
+                REFERENCES habilidades(id),
+
+            UNIQUE (usuario_id, habilidade_id)
         )
     """)
 

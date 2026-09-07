@@ -5,6 +5,7 @@ const API_HABILIDADES_DESEJADAS = '/api/habilidades-desejadas';
 
 let habilidadesSelecionadas = [];
 let habilidadesDesejadas = [];
+let habilidadesDesejadasExistentesIds = [];
 let habilidadesExistentesIds = [];
 let habilidadesCatalogo = [];
 let habilidadesAtuaisMapa = {};
@@ -1003,17 +1004,11 @@ async function abrirRoadmap(usuarioId) {
     mostrarSecao('roadmap');
 
     try {
-
         await carregarPerfilRoadmap(usuarioId);
         await carregarHabilidadesAtuais(usuarioId);
         await carregarHabilidadesRoadmap();
-        await carregarHabilidadesDesejadas(
-            usuarioId
-        );
-
-
+        await carregarHabilidadesDesejadas(usuarioId);
     } catch (erro) {
-
         console.error(
             'Erro ao abrir Roadmap:',
             erro
@@ -1404,7 +1399,14 @@ async function salvarHabilidadesDesejadas() {
         return;
     }
     try {
-        for (const habilidade of habilidadesDesejadas) {
+        const habilidadesNovas = habilidadesDesejadas.filter(habilidade => !habilidadesDesejadasExistentesIds.includes(habilidade.habilidade_id));
+        if (habilidadesNovas.length === 0) {
+            erroEl.textContent = "Nenhuma habilidade nova para salvar.";
+            erroEl.classList.add("ativo")
+            return;
+        }
+
+        for (const habilidade of habilidadesNovas) {
             const resposta =
                 await fetch(API_HABILIDADES_DESEJADAS,
                     {
@@ -1435,33 +1437,45 @@ async function salvarHabilidadesDesejadas() {
     }
 }
 
+
 async function carregarHabilidadesDesejadas(usuarioId) {
 
     try {
 
-        const resposta = await fetch(`${API_HABILIDADES_DESEJADAS}/${usuarioId}`);
+        const resposta = await fetch(
+            `${API_HABILIDADES_DESEJADAS}/${usuarioId}`
+        );
+
         if (resposta.status === 404) {
             habilidadesDesejadas = [];
+            habilidadesDesejadasExistentesIds = [];
+
             renderizarHabilidadesDesejadas();
             recalcularEstimativa();
             return;
         }
 
-
         if (!resposta.ok) {
             throw new Error('Erro ao carregar habilidades desejadas');
         }
+
         const habilidades = await resposta.json();
+
+        habilidadesDesejadasExistentesIds =
+            habilidades.map(habilidade => habilidade.habilidade_id);
+
+
         habilidadesDesejadas =
-            habilidades.map(
-                habilidade => ({
-                    habilidade_id: habilidade.habilidade_id,
-                    nivel_desejado: habilidade.nivel_desejado,
-                    nome: habilidade.habilidade || habilidade.nome
-                })
-            );
+            habilidades.map(habilidade => ({
+                habilidade_id: habilidade.habilidade_id,
+                nivel_desejado: habilidade.nivel_desejado,
+                nome: habilidade.habilidade || habilidade.nome
+            }));
+
+
         renderizarHabilidadesDesejadas();
         recalcularEstimativa();
+
     } catch (erro) {
 
         console.error(
@@ -1472,6 +1486,7 @@ async function carregarHabilidadesDesejadas(usuarioId) {
     }
 
 }
+
 
 function obterIniciais(nome) {
 

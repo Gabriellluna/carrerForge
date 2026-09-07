@@ -1,5 +1,5 @@
 from database.database import get_connection
-
+from fastapi import APIRouter, HTTPException
 
 def listar_habilidades_desejadas(usuario_id: int):
 
@@ -37,11 +37,8 @@ def criar_habilidade_desejada( usuario_id: int, habilidade_id: int, nivel_deseja
         VALUES (?, ?, ?)
         """,(usuario_id,habilidade_id,nivel_desejado)
     )
-
     connection.commit()
-
     habilidades_desejadas_id = cursor.lastrowid
-
     connection.close()
 
     return {"id": habilidades_desejadas_id, "usuario_id": usuario_id, "habilidade_id": habilidade_id, "nivel_desejado": nivel_desejado}
