@@ -1,0 +1,391 @@
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 64px;
+}
+
+/* ===== NAVBAR DA LANDING ===== */
+.navbar-landing {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ===== HERO ===== */
+.hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 24px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+    align-items: center;
+}
+
+.hero-selo {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--bg-principal);
+    color: var(--azul-brilhante);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.hero-titulo {
+    font-family: var(--fonte-titulo);
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 20px;
+}
+
+.hero-descricao {
+    color: var(--texto-muted);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 520px;
+    margin-bottom: 28px;
+}
+
+.hero-botoes {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-secundario {
+    display: inline-block;
+    padding: 10px 20px;
+    background: transparent;
+    color: var(--texto);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.btn-secundario:hover {
+    background-color: var(--bg-card-hover);
+}
+
+/* ===== CARTÃO DE DEMONSTRAÇÃO ===== */
+.hero-demo {
+    background: var(--bg-card);
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.hero-demo-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--borda);
+}
+
+.hero-demo-lista {
+    padding: 8px 24px;
+}
+
+.hero-demo-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--azul-brilhante);
+    color: white;
+    padding: 16px 24px;
+}
+
+.hero-demo-total-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+/* ===== O PROBLEMA ===== */
+.secao-problema {
+    background: var(--bg-card);
+    border-top: 1px solid var(--borda);
+    border-bottom: 1px solid var(--borda);
+    padding: 60px 0;
+}
+
+.secao-largura {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.problema-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 48px;
+}
+
+.problema-lista {
+    display: flex;
+    flex-direction: column;
+}
+
+.problema-item {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--borda);
+}
+
+.problema-item:last-child {
+    border-bottom: none;
+}
+
+.problema-numero {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--azul-brilhante);
+}
+
+.problema-item h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.problema-item p {
+    font-size: 14px;
+    color: var(--texto-muted);
+    line-height: 1.5;
+}
+
+/* ===== COMO FUNCIONA ===== */
+.secao-como-funciona {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 24px;
+}
+
+.etapas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 32px;
+}
+
+.etapa-card {
+    background: var(--bg-card);
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.etapa-numero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--bg-principal);
+    color: var(--azul-brilhante);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.etapa-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.etapa-card p {
+    font-size: 14px;
+    color: var(--texto-muted);
+    line-height: 1.5;
+}
+
+/* ===== PRÉVIA DO ROADMAP ===== */
+.secao-previa {
+    background: var(--bg-card);
+    border-top: 1px solid var(--borda);
+    border-bottom: 1px solid var(--borda);
+    padding: 60px 0;
+}
+
+.previa-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.badge-ficticio {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border: 1px solid var(--borda);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--texto-muted);
+    white-space: nowrap;
+}
+
+.previa-timeline-card {
+    background: var(--bg-principal);
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 24px;
+}
+
+.previa-timeline {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    padding-top: 20px;
+}
+
+.previa-linha {
+    position: absolute;
+    top: 25px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: var(--borda);
+}
+
+.previa-fase {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+}
+
+.previa-ponto {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--azul-brilhante);
+    margin-bottom: 12px;
+}
+
+.previa-periodo {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--texto-muted);
+}
+
+.previa-fase strong {
+    font-size: 14px;
+}
+
+.previa-horas {
+    font-size: 13px;
+    color: var(--texto-muted);
+}
+
+.previa-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.previa-stat-valor {
+    font-family: var(--fonte-titulo);
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.previa-stat span {
+    font-size: 13px;
+    color: var(--texto-muted);
+}
+
+/* ===== CHAMADA PARA O SISTEMA ===== */
+.secao-cta {
+    background: var(--bg-principal);
+    padding: 60px 0;
+    text-align: center;
+}
+
+.cta-conteudo {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.cta-conteudo .secao-titulo {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.cta-conteudo .roadmap-descricao {
+    margin: 0 auto 24px auto;
+}
+
+/* ===== RODAPÉ ===== */
+.rodape {
+    background: var(--bg-card);
+    border-top: 1px solid var(--borda);
+    padding: 24px 0;
+}
+
+.rodape-conteudo {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--texto-muted);
+}
+
+@media (max-width: 800px) {
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 40px 24px;
+    }
+
+    .problema-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .etapas-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .previa-timeline {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .previa-linha {
+        display: none;
+    }
+
+    .previa-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .rodape-conteudo {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+
+}

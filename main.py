@@ -28,7 +28,12 @@ app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 @app.get("/")
 def read_root():
-    """Acessar http://127.0.0.1:8000/ retorna o index.html."""
+    """Acessar http://127.0.0.1:8000/ retorna a landing page."""
+    return FileResponse("frontend/landing.html")
+
+@app.get("/app")
+def read_app():
+    """Acessar http://127.0.0.1:8000/app retorna o sistema (CRUD)."""
     return FileResponse("frontend/index.html")
 
 # Inicializa o banco (cria a tabela se não existir)

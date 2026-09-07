@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareerForge</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/landing.css">
+
+    <script>
+        if (localStorage.getItem('tema') === 'escuro') {
+            document.documentElement.dataset.tema = 'escuro';
+        }
+    </script>
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================= -->
+    <!-- NAVBAR -->
+    <!-- ========================= -->
+
+    <nav class="navbar navbar-landing">
+
+        <div class="navbar-logo">
+            <span class="logo-icon">⚙️</span>
+            <span class="logo-text">CareerForge</span>
+        </div>
+
+        <div class="navbar-direita">
+
+            <button id="btn-tema" class="btn-tema" onclick="alternarTema()">
+                Tema escuro
+            </button>
+
+            <a class="btn-primario" href="/app">
+                Acessar o sistema
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <main class="landing">
+
+
+        <!-- ========================= -->
+        <!-- HERO -->
+        <!-- ========================= -->
+
+        <section class="hero">
+
+            <div class="hero-texto">
+
+                <span class="hero-selo">Trabalho acadêmico · Engenharia de software</span>
+
+                <h1 class="hero-titulo">
+                    Do nível atual ao nível desejado, com o tempo de estudo estimado.
+                </h1>
+
+                <p class="hero-descricao">
+                    O CareerForge registra as habilidades atuais de uma pessoa, recebe os níveis
+                    que ela quer alcançar e calcula a carga de estudo necessária, organizando o
+                    percurso em fases.
+                </p>
+
+                <div class="hero-botoes">
+                    <a class="btn-primario" href="/app">Acessar o sistema</a>
+                    <a class="btn-secundario" href="#como-funciona">Como funciona</a>
+                </div>
+
+            </div>
+
+
+            <!-- CARTÃO DE DEMONSTRAÇÃO (dados fictícios, só para ilustrar) -->
+            <div class="hero-demo">
+
+                <div class="hero-demo-cabecalho">
+
+                    <div class="avatar-pessoa">AR</div>
+
+                    <div>
+                        <div class="perfil-nome">Ana Ribeiro</div>
+                        <div class="perfil-email">Roadmap · dados de demonstração</div>
+                    </div>
+
+                </div>
+
+
+                <div class="hero-demo-lista">
+
+                    <div class="linha-desejada">
+                        <div class="linha-desejada-info">
+                            <strong>Python</strong>
+                            <span>nível 3 → 5</span>
+                        </div>
+                        <div class="pontos-nivel">
+                            <span class="ponto-nivel preenchido"></span>
+                            <span class="ponto-nivel preenchido"></span>
+                            <span class="ponto-nivel preenchido"></span>
+                            <span class="ponto-nivel preenchido"></span>
+                            <span class="ponto-nivel preenchido"></span>
+                        </div>
+                        <strong>135 h</strong>
+                    </div>
+
+                    <div class="linha-desejada">
+                        <div class="linha-desejada-info">
+                            <strong>SQL</strong>
+                            <span>nível 2 → 4</span>
+                        </div>
+                        <div class="pontos-nivel">
+                            <span class="ponto-nivel preenchido"></span>
+                            <span class="ponto-nivel preenchido"></span>
+                            <span class="ponto-nivel preenchido"></span>
+                            <span class="ponto-nivel preenchido"></span>
+                            <span class="ponto-nivel"></span>
+                        </div>
+                        <strong>90 h</strong>
+                    </div>
+
+                    <div class="linha-desejada">
+                        <div class="linha-desejada-info">
+                            <strong>AWS</strong>
+                            <span>nível 0 → 3</span>
+                        </div>
+                        <div class="pontos-nivel">
+                            <span class="ponto-nivel preenchido"></span>
+                            <span class="ponto-nivel preenchido"></span>
+                            <span class="ponto-nivel preenchido"></span>
+                            <span class="ponto-nivel"></span>
+                            <span class="ponto-nivel"></span>
+                        </div>
+                        <strong>70 h</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="hero-demo-total">
+
+                    <div>
+                        <span class="estimativa-label">Estimativa total</span>
+                        <div class="estimativa-total">295 h</div>
+                    </div>
+
+                    <div class="hero-demo-total-info">
+                        <span>≈ 9 meses</span>
+                        <span>8 h por semana</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- O PROBLEMA -->
+        <!-- ========================= -->
+
+        <section class="secao-problema">
+
+            <div class="secao-largura problema-grid">
+
+                <div>
+                    <h2 class="secao-titulo">O problema</h2>
+                    <p class="roadmap-descricao">
+                        Planos de desenvolvimento individual costumam ser escritos em
+                        planilhas, sem qualquer noção de esforço. A pessoa sabe onde quer
+                        chegar, mas não quanto tempo isso custa.
+                    </p>
+                </div>
+
+                <div class="problema-lista">
+
+                    <div class="problema-item">
+                        <span class="problema-numero">01</span>
+                        <div>
+                            <h3>Nível é declarado, esforço não</h3>
+                            <p>
+                                Registrar que alguém está no nível 2 e quer chegar ao 4
+                                não diz nada sobre quanto estudo isso exige.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="problema-item">
+                        <span class="problema-numero">02</span>
+                        <div>
+                            <h3>Metas sem ordem de execução</h3>
+                            <p>
+                                Sem sequenciamento, todas as habilidades parecem
+                                prioritárias ao mesmo tempo.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="problema-item">
+                        <span class="problema-numero">03</span>
+                        <div>
+                            <h3>Prazos definidos por intuição</h3>
+                            <p>
+                                A data de conclusão é estimada no chute, e por isso
+                                raramente se sustenta.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ========================= -->
+        <!-- COMO FUNCIONA -->
+        <!-- ========================= -->
+
+        <section id="como-funciona" class="secao-como-funciona">
+
+            <h2 class="secao-titulo">Como funciona</h2>
+            <p class="roadmap-descricao">
+                Três etapas, a partir dos dados que a própria pessoa cadastra.
+            </p>
+
+            <div class="etapas-grid">
+
+                <div class="etapa-card">
+                    <span class="etapa-numero">1</span>
+                    <h3>Cadastrar a pessoa</h3>
+                    <p>
+                        Nome, e-mail e as habilidades que ela já domina, cada uma com
+                        nível de 1 a 5.
+                    </p>
+                </div>
+
+                <div class="etapa-card">
+                    <span class="etapa-numero">2</span>
+                    <h3>Definir o alvo</h3>
+                    <p>
+                        Para cada habilidade desejada, escolher o nível que se pretende
+                        alcançar.
+                    </p>
+                </div>
+
+                <div class="etapa-card">
+                    <span class="etapa-numero">3</span>
+                    <h3>Receber a estimativa</h3>
+                    <p>
+                        O sistema soma o custo de cada salto de nível e devolve horas,
+                        prazo e um roadmap em fases.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- PRÉVIA DO ROADMAP -->
+        <!-- ========================= -->
+
+        <section class="secao-previa">
+
+            <div class="secao-largura">
+
+                <div class="previa-cabecalho">
+
+                    <div>
+                        <h2 class="secao-titulo">Prévia do roadmap</h2>
+                        <p class="roadmap-descricao">
+                            Exemplo calculado para Ana Ribeiro, uma pessoa fictícia de
+                            demonstração: Python 3, SQL 2, Docker 1 e Git 3 como ponto de
+                            partida.
+                        </p>
+                    </div>
+
+                    <span class="badge-ficticio">Dados fictícios</span>
+
+                </div>
+
+
+                <div class="previa-timeline-card">
+
+                    <div class="previa-timeline">
+
+                        <div class="previa-linha"></div>
+
+                        <div class="previa-fase">
+                            <span class="previa-ponto"></span>
+                            <span class="previa-periodo">Mês 1-2</span>
+                            <strong>SQL ao nível 3</strong>
+                            <span class="previa-horas">35 h</span>
+                        </div>
+
+                        <div class="previa-fase">
+                            <span class="previa-ponto"></span>
+                            <span class="previa-periodo">Mês 2-4</span>
+                            <strong>Python ao nível 4</strong>
+                            <span class="previa-horas">55 h</span>
+                        </div>
+
+                        <div class="previa-fase">
+                            <span class="previa-ponto"></span>
+                            <span class="previa-periodo">Mês 4-5</span>
+                            <strong>SQL ao nível 4</strong>
+                            <span class="previa-horas">55 h</span>
+                        </div>
+
+                        <div class="previa-fase">
+                            <span class="previa-ponto"></span>
+                            <span class="previa-periodo">Mês 5-6</span>
+                            <strong>AWS ao nível 2</strong>
+                            <span class="previa-horas">35 h</span>
+                        </div>
+
+                        <div class="previa-fase">
+                            <span class="previa-ponto"></span>
+                            <span class="previa-periodo">Mês 6-9</span>
+                            <strong>Python 5 · AWS 3</strong>
+                            <span class="previa-horas">115 h</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="previa-stats">
+
+                    <div class="previa-stat">
+                        <div class="previa-stat-valor">295 h</div>
+                        <span>Total de estudo estimado</span>
+                    </div>
+
+                    <div class="previa-stat">
+                        <div class="previa-stat-valor">37</div>
+                        <span>Semanas a 8 h por semana</span>
+                    </div>
+
+                    <div class="previa-stat">
+                        <div class="previa-stat-valor">3</div>
+                        <span>Habilidades no plano</span>
+                    </div>
+
+                    <div class="previa-stat">
+                        <div class="previa-stat-valor">Jun 2027</div>
+                        <span>Conclusão prevista</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- CHAMADA PARA O SISTEMA -->
+        <!-- ========================= -->
+
+        <section class="secao-cta">
+
+            <div class="cta-conteudo">
+
+                <h2 class="secao-titulo">Veja o sistema com os dados de demonstração</h2>
+
+                <p class="roadmap-descricao">
+                    A tela de Pessoas já vem preenchida com cinco cadastros fictícios e
+                    um roadmap calculado.
+                </p>
+
+                <a class="btn-primario" href="/app">Acessar o sistema</a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ========================= -->
+    <!-- RODAPÉ -->
+    <!-- ========================= -->
+
+    <footer class="rodape">
+        <div class="secao-largura rodape-conteudo">
+            <span>CareerForge · protótipo acadêmico, 2026</span>
+            <span>FastAPI · HTML, CSS e JavaScript</span>
+        </div>
+    </footer>
+
+
+    <script src="/static/tema.js"></script>
+
+</body>
+
+</html>

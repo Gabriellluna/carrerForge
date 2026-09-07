@@ -17,35 +17,9 @@ document.addEventListener(
     () => {
 
         carregarPessoas();
-        atualizarBotaoTema();
 
     }
 );
-
-function alternarTema() {
-
-    const escuro = document.documentElement.dataset.tema === 'escuro';
-
-    if (escuro) {
-        delete document.documentElement.dataset.tema;
-        localStorage.setItem('tema', 'claro');
-    } else {
-        document.documentElement.dataset.tema = 'escuro';
-        localStorage.setItem('tema', 'escuro');
-    }
-
-    atualizarBotaoTema();
-
-}
-
-function atualizarBotaoTema() {
-
-    const botao = document.getElementById('btn-tema');
-    const escuro = document.documentElement.dataset.tema === 'escuro';
-
-    botao.textContent = escuro ? 'Tema claro' : 'Tema escuro';
-
-}
 
 async function carregarPessoas() {
     const container = document.getElementById('lista-pessoas');
@@ -739,33 +713,6 @@ function abrirModal(tipo, pessoa, habilidadesExistentes) {
     modal.classList.add(
         'ativo'
     );
-
-}
-
-function abrirSobre() {
-
-    const overlay = document.getElementById('overlay');
-    const modal = document.getElementById('modal');
-    const titulo = document.getElementById('modal-titulo');
-    const subtitulo = document.getElementById('modal-subtitulo');
-    const conteudo = document.getElementById('modal-conteudo');
-
-    titulo.textContent = 'Sobre o projeto';
-    subtitulo.textContent = '';
-    conteudo.innerHTML = `
-
-        <p class="sobre-texto">
-            CareerForge é um projeto acadêmico de planejamento de
-            desenvolvimento profissional. Você cadastra as habilidades
-            que já possui, define o nível que deseja alcançar em cada
-            uma e o sistema calcula uma estimativa de horas de estudo
-            e um roadmap para chegar lá.
-        </p>
-
-    `;
-
-    overlay.classList.add('ativo');
-    modal.classList.add('ativo');
 
 }
 
