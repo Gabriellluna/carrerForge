@@ -3,6 +3,16 @@ const API_HABILIDADES = '/api/habilidades';
 const API_PESSOA_HABILIDADES = '/api/pessoa-habilidades';
 const API_HABILIDADES_DESEJADAS = '/api/habilidades-desejadas';
 
+// A API não retorna o nome da categoria, só o categoria_id — mapeado aqui na mesma ordem do seed em database.py
+const CATEGORIAS_HABILIDADE = {
+    1: 'Linguagem de Programação',
+    2: 'Banco de Dados',
+    3: 'Framework',
+    4: 'DevOps',
+    5: 'Cloud',
+    6: 'Ferramenta'
+};
+
 let habilidadesSelecionadas = [];
 let habilidadesDesejadas = [];
 let habilidadesDesejadasExistentesIds = [];
@@ -139,6 +149,59 @@ function filtrarPessoas() {
         linha.hidden = !corresponde;
     });
 
+}
+
+async function carregarHabilidadesCatalogo() {
+    const container = document.getElementById('lista-habilidades');
+    try {
+        const resposta = await fetch(API_HABILIDADES, { method: 'GET' });
+        if (!resposta.ok) {
+            throw new Error('Erro ao buscar habilidades');
+        }
+
+        const habilidades = await resposta.json();
+        if (habilidades.length === 0) {
+            container.innerHTML = `
+                <tr>
+                    <td colspan="4" class="empty-text">
+                        Nenhuma habilidade cadastrada ainda.
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        container.innerHTML =
+            habilidades.map(
+                habilidade => `
+
+                    <tr>
+                        <td>${habilidade.nome}</td>
+                        <td>${CATEGORIAS_HABILIDADE[habilidade.categoria_id] || '-'}</td>
+                        <td>${habilidade.horas_por_nivel} h</td>
+                        <td>${habilidade.horas_por_nivel} h</td>
+                    </tr>
+
+                `
+            ).join('');
+
+    } catch (erro) {
+
+        container.innerHTML = `
+            <tr>
+                <td colspan="4" class="empty-text">
+                    Erro ao carregar habilidades.
+                    Verifique se a API está rodando.
+                </td>
+            </tr>
+        `;
+
+        console.error(
+            'Erro:',
+            erro
+        );
+
+    }
 }
 
 async function salvarPessoa() {
@@ -1517,6 +1580,83 @@ function recalcularEstimativa() {
         semanas > 0 ? calcularDataConclusao(semanas) : '—';
 
     renderizarDistribuicaoEsforco(itens, totalHoras);
+    renderizarFasesRoadmap(horasPorSemana);
+
+}
+
+function calcularFasesRoadmap(horasPorSemana) {
+
+    const passos = [];
+
+    habilidadesDesejadas.forEach(item => {
+        const habilidade = habilidadesCatalogo.find(h => h.id === item.habilidade_id);
+        if (!habilidade) {
+            return;
+        }
+
+        const nivelAtual = habilidadesAtuaisMapa[item.habilidade_id] || 0;
+
+        for (let nivel = nivelAtual + 1; nivel <= item.nivel_desejado; nivel++) {
+            passos.push({
+                nome: item.nome,
+                nivel,
+                horas: habilidade.horas_por_nivel
+            });
+        }
+    });
+
+    passos.sort((a, b) => a.horas - b.horas);
+
+    let horasAcumuladas = 0;
+
+    return passos.map(passo => {
+        const semanaInicio = horasPorSemana > 0 ? horasAcumuladas / horasPorSemana : 0;
+        horasAcumuladas += passo.horas;
+        const semanaFim = horasPorSemana > 0 ? horasAcumuladas / horasPorSemana : 0;
+
+        return { ...passo, semanaInicio, semanaFim };
+    });
+
+}
+
+function renderizarFasesRoadmap(horasPorSemana) {
+
+    const container = document.getElementById('roadmap-fases');
+    const fases = calcularFasesRoadmap(horasPorSemana);
+
+    if (fases.length === 0) {
+        container.classList.remove('tem-fases');
+        container.innerHTML = `
+            <p class="lista-vazia">
+                Adicione habilidades desejadas para gerar o roadmap em fases.
+            </p>
+        `;
+        return;
+    }
+
+    container.classList.add('tem-fases');
+    container.style.setProperty('--fase-total', fases.length);
+
+    container.innerHTML = fases
+        .map(fase => {
+            const mesInicio = Math.max(Math.ceil(fase.semanaInicio * 7 / 30), 1);
+            const mesFim = Math.max(Math.ceil(fase.semanaFim * 7 / 30), mesInicio);
+            const periodo = horasPorSemana > 0
+                ? (mesInicio === mesFim ? `Mês ${mesInicio}` : `Mês ${mesInicio}-${mesFim}`)
+                : '—';
+
+            return `
+
+                <div class="fase-roadmap">
+                    <span class="fase-ponto"></span>
+                    <span class="fase-periodo">${periodo}</span>
+                    <strong>${fase.nome} ao nível ${fase.nivel}</strong>
+                    <span class="fase-horas">${fase.horas} h</span>
+                </div>
+
+            `;
+        })
+        .join('');
 
 }
 
@@ -1593,6 +1733,10 @@ function mostrarSecao(secao) {
 
     if (botao) {
         botao.classList.add('active');
+    }
+
+    if (secao === 'habilidades') {
+        carregarHabilidadesCatalogo();
     }
 
     if (secao === 'roadmap' && !usuarioAtualId) {

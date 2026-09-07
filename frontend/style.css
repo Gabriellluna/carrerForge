@@ -115,6 +115,9 @@ body {
 }
 
 .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     padding: 4px 0;
     background: none;
     color: var(--texto-muted);
@@ -140,9 +143,6 @@ body {
 .nav-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    display: flex;
-    align-items: center;
-    gap: 6px;
 }
 
 .badge-em-breve {
@@ -238,18 +238,22 @@ body {
     border-radius: 12px;
 }
 
-.tabela-pessoas {
+.tabela-pessoas,
+.tabela-habilidades {
     width: 100%;
     border-collapse: collapse;
 }
 
 .tabela-pessoas th,
-.tabela-pessoas td {
+.tabela-pessoas td,
+.tabela-habilidades th,
+.tabela-habilidades td {
     padding: 12px 16px;
     text-align: left;
 }
 
-.tabela-pessoas th {
+.tabela-pessoas th,
+.tabela-habilidades th {
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
@@ -258,16 +262,27 @@ body {
     border-bottom: 1px solid var(--borda);
 }
 
-.tabela-pessoas tbody tr {
+.tabela-pessoas tbody tr,
+.tabela-habilidades tbody tr {
     border-bottom: 1px solid var(--borda);
 }
 
-.tabela-pessoas tbody tr:last-child {
+.tabela-pessoas tbody tr:last-child,
+.tabela-habilidades tbody tr:last-child {
     border-bottom: none;
 }
 
-.tabela-pessoas tbody tr:hover {
+.tabela-pessoas tbody tr:hover,
+.tabela-habilidades tbody tr:hover {
     background-color: var(--bg-card-hover);
+}
+
+.tabela-nota {
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--texto-muted);
+    border-top: 1px solid var(--borda);
 }
 
 .pessoa-acoes {
@@ -982,6 +997,64 @@ body {
     height: 100%;
     background: var(--azul-brilhante);
     border-radius: 3px;
+}
+
+
+/* =========================================
+   ROADMAP ESTIMADO (FASES)
+========================================= */
+
+.roadmap-fases {
+    position: relative;
+    display: flex;
+    padding-top: 20px;
+}
+
+.roadmap-fases.tem-fases::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: calc(50% / var(--fase-total));
+    right: calc(50% / var(--fase-total));
+    height: 1px;
+    background: var(--borda);
+}
+
+.fase-roadmap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 0 8px;
+    text-align: center;
+}
+
+.fase-ponto {
+    position: relative;
+    z-index: 1;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--azul-brilhante);
+    margin-bottom: 10px;
+}
+
+.fase-periodo {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--texto-muted);
+}
+
+.fase-roadmap strong {
+    font-size: 14px;
+}
+
+.fase-horas {
+    font-size: 13px;
+    color: var(--texto-muted);
 }
 
 

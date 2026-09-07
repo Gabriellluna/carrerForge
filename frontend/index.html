@@ -54,15 +54,8 @@
             </button>
 
 
-            <button class="nav-btn" disabled>
+            <button id="nav-habilidades" class="nav-btn" onclick="mostrarSecao('habilidades')">
                 Habilidades
-                <span class="badge-em-breve">Em breve</span>
-            </button>
-
-
-            <button class="nav-btn" disabled>
-                Objetivo
-                <span class="badge-em-breve">Em breve</span>
             </button>
 
         </div>
@@ -319,9 +312,69 @@
                 <p class="roadmap-descricao">
                     Fases organizadas pelo menor esforço até o nível-alvo.
                 </p>
-                <p class="lista-vazia">
-                    Em breve — essa etapa depende de um cálculo de fases que ainda não existe na API.
+                <div id="roadmap-fases" class="roadmap-fases">
+                    <p class="lista-vazia">
+                        Adicione habilidades desejadas para gerar o roadmap em fases.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+
+
+        <!-- ========================= -->
+        <!-- SEÇÃO: HABILIDADES -->
+        <!-- ========================= -->
+
+        <section id="secao-habilidades" class="secao">
+
+            <div class="secao-header">
+
+                <div>
+
+                    <h1 class="secao-titulo">
+                        Habilidades
+                        <span class="badge-em-breve">Em breve</span>
+                    </h1>
+
+                    <p class="secao-subtitulo">
+                        Catálogo central de habilidades: cada item tem nome, categoria e o custo em
+                        horas de cada salto de nível — hoje esses valores são fixos no cálculo.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="tabela-container">
+
+                <table class="tabela-habilidades">
+
+                    <thead>
+                        <tr>
+                            <th>Habilidade</th>
+                            <th>Categoria</th>
+                            <th>Horas 1→2</th>
+                            <th>Horas 4→5</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="lista-habilidades">
+                        <tr>
+                            <td colspan="4" class="loading-text">
+                                Carregando habilidades...
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+                <p class="tabela-nota">
+                    Catálogo somente leitura — edição será liberada em versão futura.
                 </p>
+
             </div>
 
         </section>
