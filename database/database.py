@@ -13,7 +13,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS usuarios (
             id    INTEGER PRIMARY KEY AUTOINCREMENT,
             nome  TEXT NOT NULL,
-            email TEXT NOT NULL UNIQUE,
+            email TEXT NOT NULL,
             idade INTEGER,
             cargo_atual TEXT,
             objetivo_profissional TEXT
@@ -30,12 +30,7 @@ def init_db():
         try:
             connection.execute(f"ALTER TABLE usuarios ADD COLUMN {coluna}")
         except sqlite3.OperationalError:
-            pass  # coluna já existe
-
-    # Garante e-mail único em bancos criados antes dessa regra existir
-    connection.execute("""
-        CREATE UNIQUE INDEX IF NOT EXISTS idx_usuarios_email ON usuarios(email)
-    """)
+            pass 
 
     connection.execute("""
         CREATE TABLE IF NOT EXISTS categorias (
