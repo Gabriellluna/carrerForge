@@ -22,14 +22,7 @@ let habilidadesDesejadasRemovidas = [];
 let usuarioAtualId = null;
 let pessoaEmEdicaoId = null;
 
-document.addEventListener(
-    'DOMContentLoaded',
-    () => {
-
-        carregarPessoas();
-
-    }
-);
+document.addEventListener('DOMContentLoaded',() => {carregarPessoas();});
 
 async function carregarPessoas() {
     const container = document.getElementById('lista-pessoas');
@@ -96,7 +89,7 @@ async function carregarPessoas() {
                                     onclick="excluirPessoa(${pessoa.id})"
                                     title="Excluir"
                                 >
-                                    ×
+                                    x
                                 </button>
 
                             </div>
@@ -1543,21 +1536,12 @@ function pontosNivel(nivel) {
 }
 
 function formatarDuracao(semanas) {
-
     const totalMeses = Math.max(Math.round(semanas * 7 / 30), 1);
     const anos = Math.floor(totalMeses / 12);
     const meses = totalMeses % 12;
-
-    if (anos === 0) {
-        return `${meses} ${meses === 1 ? 'mês' : 'meses'}`;
-    }
-
-    if (meses === 0) {
-        return `${anos} ${anos === 1 ? 'ano' : 'anos'}`;
-    }
-
+    if (anos === 0) {return `${meses} ${meses === 1 ? 'mês' : 'meses'}`;}
+    if (meses === 0) {return `${anos} ${anos === 1 ? 'ano' : 'anos'}`;}
     return `${anos} ${anos === 1 ? 'ano' : 'anos'} e ${meses} ${meses === 1 ? 'mês' : 'meses'}`;
-
 }
 
 function calcularDataConclusao(semanas) {
@@ -1714,21 +1698,21 @@ function renderizarDistribuicaoEsforco(itens, totalHoras) {
 }
 
 
+function resetMessages() {
+    document.getElementById('roadmap-erro').classList.remove('ativo');
+    document.getElementById('roadmap-success').classList.remove('ativo');
+}
+
 function fecharModal() {
     document.getElementById('overlay').classList.remove('ativo');
     document.getElementById('modal').classList.remove('ativo');
     document.getElementById('modal-conteudo').innerHTML = '';
-
 }
+
 function mostrarSecao(secao) {
-    document.querySelectorAll('.nav-btn').forEach(
-        btn =>
-            btn.classList.remove(
-                'active'
-            )
-    );
-
-
+    document.getElementById('roadmap-erro').classList.remove('ativo');
+    document.getElementById('roadmap-success').classList.remove('ativo');
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     document
         .querySelectorAll('.secao')
         .forEach(
