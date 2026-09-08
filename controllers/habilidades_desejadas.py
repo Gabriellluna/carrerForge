@@ -2,7 +2,8 @@ from fastapi import APIRouter, HTTPException
 
 from services.habilidades_desejadas import (
     listar_habilidades_desejadas,
-    criar_habilidade_desejada
+    criar_habilidade_desejada,
+    deletar_habilidade_desejada
 )
 
 router = APIRouter()
@@ -30,3 +31,11 @@ def post_habilidades_desejadas(pessoa_habilidade: dict):
         )
 
     return criar_habilidade_desejada(usuario_id, habilidade_id, nivel_desejado)
+
+@router.delete("/habilidades-desejadas/{habilidade_desejada_id}/{usuario_id}")
+def delete_habilidade_desejada(habilidade_desejada_id: int, usuario_id: int):
+    print("Chegamos aqui")
+    """Remove uma pessoa do sistema."""
+    if not deletar_habilidade_desejada(habilidade_desejada_id, usuario_id):
+        raise HTTPException(status_code=404, detail="Habilidade Desejada não encontrada")
+    return {"message": "Habilidade Desejada removida com sucesso"}

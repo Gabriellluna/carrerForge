@@ -3,7 +3,6 @@ const API_HABILIDADES = '/api/habilidades';
 const API_PESSOA_HABILIDADES = '/api/pessoa-habilidades';
 const API_HABILIDADES_DESEJADAS = '/api/habilidades-desejadas';
 
-// A API não retorna o nome da categoria, só o categoria_id — mapeado aqui na mesma ordem do seed em database.py
 const CATEGORIAS_HABILIDADE = {
     1: 'Linguagem de Programação',
     2: 'Banco de Dados',
@@ -19,6 +18,7 @@ let habilidadesDesejadasExistentesIds = [];
 let habilidadesExistentesIds = [];
 let habilidadesCatalogo = [];
 let habilidadesAtuaisMapa = {};
+let habilidadesDesejadasRemovidas = [];
 let usuarioAtualId = null;
 let pessoaEmEdicaoId = null;
 
@@ -941,10 +941,7 @@ function adicionarHabilidade() {
 
 function removerHabilidade(index) {
 
-    habilidadesSelecionadas.splice(
-        index,
-        1
-    );
+    habilidadesSelecionadas.splice(index, 1);
 
 
     renderizarHabilidadesSelecionadas();
@@ -1276,11 +1273,8 @@ function adicionarHabilidadeDesejada() {
 
 
     if (habilidadeJaExiste) {
-
         erroEl.textContent = 'Essa habilidade já foi adicionada.';
-
         erroEl.classList.add('ativo');
-
         return;
     }
 
@@ -1299,11 +1293,15 @@ function adicionarHabilidadeDesejada() {
     erroEl.classList.remove('ativo');
 
 }
-function removerHabilidadeDesejada(index) {
+
+function removerHabilidadeDesejada(habilidade_id, index) {
+
     habilidadesDesejadas.splice(index, 1);
 
     renderizarHabilidadesDesejadas();
     recalcularEstimativa();
+
+    habilidadesDesejadasRemovidas.push(habilidade_id)
 
 }
 
@@ -1338,6 +1336,8 @@ function renderizarHabilidadesDesejadas() {
 
     const horasPorSemana = Number(document.getElementById('input-horas-semana').value) || 0;
 
+    console.log("Habilidade desejada: ", habilidadesDesejadas)
+
     container.innerHTML =
         habilidadesDesejadas
             .map(
@@ -1345,7 +1345,6 @@ function renderizarHabilidadesDesejadas() {
 
                     const { nivelAtual, horas } = calcularItemDesejado(habilidade);
                     const semanas = horasPorSemana > 0 ? Math.ceil(horas / horasPorSemana) : 0;
-
                     return `
 
                         <div class="linha-desejada">
@@ -1381,9 +1380,9 @@ function renderizarHabilidadesDesejadas() {
                             <button
                                 type="button"
                                 class="btn-remover-habilidade"
-                                onclick="removerHabilidadeDesejada(${index})"
+                                onclick="removerHabilidadeDesejada(${habilidade.habilidade_id}, ${index})"
                             >
-                                ×
+                                x
                             </button>
 
                         </div>
@@ -1398,6 +1397,9 @@ function renderizarHabilidadesDesejadas() {
 async function salvarHabilidadesDesejadas() {
 
     const erroEl = document.getElementById('roadmap-erro');
+    const successEl = document.getElementById('roadmap-success')
+
+    console.log("Habilidades a serem removidas: ", habilidadesDesejadasRemovidas)
 
     if (!usuarioAtualId) {
         erroEl.textContent = 'Nenhum usuário selecionado.';
@@ -1418,12 +1420,26 @@ async function salvarHabilidadesDesejadas() {
         return !jaExiste;
     });
 
+    if (habilidadesNovas.length === 0 && habilidadesDesejadasRemovidas.length === 0) {
+        erroEl.textContent = "Nenhuma habilidade nova para salvar.";
+        erroEl.classList.add("ativo");
+        return;
+    }
+
     try {
 
-        if (habilidadesNovas.length === 0) {
-            erroEl.textContent = "Nenhuma habilidade nova para salvar.";
-            erroEl.classList.add("ativo");
-            return;
+        if (habilidadesDesejadasRemovidas.length > 0) {
+            for (const habilidade of habilidadesDesejadasRemovidas) {
+                console.log("Deletando habilidade: ", habilidade)
+                const resposta = await fetch(`${API_HABILIDADES_DESEJADAS}/${habilidade}/${usuarioAtualId}`, { method: 'DELETE' });
+
+                if (!resposta.ok) {
+                    const dados = await resposta.json();
+                    throw new Error(dados.detail || 'Erro ao deletar habilidade desejada');
+                }
+            }
+
+            habilidadesDesejadasRemovidas.length = 0
         }
 
         for (const habilidade of habilidadesNovas) {
@@ -1448,8 +1464,8 @@ async function salvarHabilidadesDesejadas() {
             );
         }
 
-        erroEl.textContent = 'Roadmap salvo com sucesso!';
-        erroEl.classList.remove('ativo');
+        successEl.textContent = 'Roadmap salvo com sucesso!';
+        successEl.classList.add('ativo');
 
     } catch (erro) {
 

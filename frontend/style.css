@@ -462,7 +462,18 @@ body {
     display: none;
 }
 
+.form-success {
+    color: var(--verde);
+    font-size: 13px;
+    margin-top: 6px;
+    display: none;
+}
+
 .form-erro.ativo {
+    display: block;
+}
+
+.form-success.ativo {
     display: block;
 }
 
