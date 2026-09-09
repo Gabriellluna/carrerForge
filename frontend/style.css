@@ -1107,3 +1107,38 @@ body {
     }
 
 }
+
+.modal-delete-user {
+    display: none;
+    background: var(--azul-brilhante);
+    width: 50%;
+    height: 100px;
+    margin: auto;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 15px;
+
+    button {
+        border: none;
+        padding: 5px 8px;
+        color: var(--bg-card);
+        border-radius: 10px;
+        font-weight: bold;  
+    }
+
+    #delete-user {
+        background: var(--verde);
+    }
+
+    #cancel-user {
+        background-color: var(--vermelho);
+    }
+}
+
+.modal-delete-user.ativo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}

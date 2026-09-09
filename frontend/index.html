@@ -84,7 +84,13 @@
 
     <main class="container">
 
-
+        <div class="modal-delete-user">
+            <p>Tem Certeza que deseja excluir o usuário?</p>
+            <div>
+                <button id="delete-user" onclick="confirmaExcluirPessoa()">Sim</button>
+                <button id="cancel-user" onclick="fecharModalDeletarUsuario()">Não</button>
+            </div>
+        </div>
         <!-- ========================= -->
         <!-- SEÇÃO: PESSOAS -->
         <!-- ========================= -->
@@ -242,7 +248,7 @@
                         <div class="roadmap-separador"></div>
 
                         <p class="formula-texto">
-                            Cálculo: (nível desejado − nível atual) × horas por nível de cada habilidade.
+                            Cálculo: (nível desejado - nível atual) x horas por nível de cada habilidade.
                         </p>
 
                         <div id="roadmap-erro" class="form-erro"></div>

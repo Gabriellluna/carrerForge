@@ -19,10 +19,11 @@ let habilidadesExistentesIds = [];
 let habilidadesCatalogo = [];
 let habilidadesAtuaisMapa = {};
 let habilidadesDesejadasRemovidas = [];
+let usuarioDeletadoID = 0;
 let usuarioAtualId = null;
 let pessoaEmEdicaoId = null;
 
-document.addEventListener('DOMContentLoaded',() => {carregarPessoas();});
+document.addEventListener('DOMContentLoaded', () => { carregarPessoas(); });
 
 async function carregarPessoas() {
     const container = document.getElementById('lista-pessoas');
@@ -82,7 +83,6 @@ async function carregarPessoas() {
                                 >
                                     Roadmap
                                 </button>
-
 
                                 <button
                                     class="btn-icone danger"
@@ -266,41 +266,32 @@ async function salvarPessoa() {
     }
 }
 
-async function excluirPessoa(id) {
-    if (!confirm('Tem certeza que deseja excluir esta pessoa?')
-    ) { return; }
+const fecharModalDeletarUsuario = () => document.querySelector('.modal-delete-user').classList.remove('ativo')
 
+const excluirPessoa = (id) => {
+    usuarioDeletadoID = id
+    document.querySelector('.modal-delete-user').classList.add('ativo')
+}
 
+async function confirmaExcluirPessoa() {
     try {
         const resposta = await fetch(
-            `${API_PESSOAS}/${id}`,
+            `${API_PESSOAS}/${usuarioDeletadoID}`,
             { method: 'DELETE' }
         );
 
         if (!resposta.ok) {
             throw new Error('Erro ao excluir pessoa');
         }
-        if (usuarioAtualId === id) {
+        if (usuarioAtualId === usuarioDeletadoID) {
             usuarioAtualId = null;
         }
-
-
         await carregarPessoas();
-
-
     } catch (erro) {
-
-        alert(
-            'Erro ao excluir pessoa.'
-        );
-
-        console.error(
-            'Erro:',
-            erro
-        );
-
+        alert('Erro ao excluir pessoa.');
+        console.error('Erro:', erro);
     }
-
+    fecharModalDeletarUsuario()
 }
 
 async function abrirEdicaoPessoa(id) {
@@ -1329,8 +1320,6 @@ function renderizarHabilidadesDesejadas() {
 
     const horasPorSemana = Number(document.getElementById('input-horas-semana').value) || 0;
 
-    console.log("Habilidade desejada: ", habilidadesDesejadas)
-
     container.innerHTML =
         habilidadesDesejadas
             .map(
@@ -1392,8 +1381,6 @@ async function salvarHabilidadesDesejadas() {
     const erroEl = document.getElementById('roadmap-erro');
     const successEl = document.getElementById('roadmap-success')
 
-    console.log("Habilidades a serem removidas: ", habilidadesDesejadasRemovidas)
-
     if (!usuarioAtualId) {
         erroEl.textContent = 'Nenhum usuário selecionado.';
         erroEl.classList.add('ativo');
@@ -1423,7 +1410,6 @@ async function salvarHabilidadesDesejadas() {
 
         if (habilidadesDesejadasRemovidas.length > 0) {
             for (const habilidade of habilidadesDesejadasRemovidas) {
-                console.log("Deletando habilidade: ", habilidade)
                 const resposta = await fetch(`${API_HABILIDADES_DESEJADAS}/${habilidade}/${usuarioAtualId}`, { method: 'DELETE' });
 
                 if (!resposta.ok) {
@@ -1539,8 +1525,8 @@ function formatarDuracao(semanas) {
     const totalMeses = Math.max(Math.round(semanas * 7 / 30), 1);
     const anos = Math.floor(totalMeses / 12);
     const meses = totalMeses % 12;
-    if (anos === 0) {return `${meses} ${meses === 1 ? 'mês' : 'meses'}`;}
-    if (meses === 0) {return `${anos} ${anos === 1 ? 'ano' : 'anos'}`;}
+    if (anos === 0) { return `${meses} ${meses === 1 ? 'mês' : 'meses'}`; }
+    if (meses === 0) { return `${anos} ${anos === 1 ? 'ano' : 'anos'}`; }
     return `${anos} ${anos === 1 ? 'ano' : 'anos'} e ${meses} ${meses === 1 ? 'mês' : 'meses'}`;
 }
 
