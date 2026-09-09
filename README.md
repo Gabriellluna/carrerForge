@@ -87,3 +87,10 @@ Todos com prefixo `/api`.
 | `/pessoa-habilidades` | POST | Adicionar habilidade atual a uma pessoa |
 | `/habilidades-desejadas/{usuario_id}` | GET | Listar habilidades desejadas de uma pessoa |
 | `/habilidades-desejadas` | POST | Adicionar habilidade desejada a uma pessoa |
+
+## Integrantes do grupo
+
+| Nome | RM |
+|---|---|
+| Bruno Guilherme Gonçalves de Oliveira | RM573697 |
+| Gabriel Luna Maia | RM570982 |
