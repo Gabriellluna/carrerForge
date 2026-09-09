@@ -36,9 +36,7 @@ def read_app():
     """Acessar http://127.0.0.1:8000/app retorna o sistema (CRUD)."""
     return FileResponse("frontend/index.html")
 
-# Inicializa o banco (cria a tabela se não existir)
 init_db()
 
-# Roda o servidor: python main.py
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

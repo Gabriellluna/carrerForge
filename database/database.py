@@ -20,7 +20,6 @@ def init_db():
         )
     """)
 
-    # Garante as colunas novas em bancos criados antes desses campos existirem
     colunas_novas = [
         "idade INTEGER",
         "cargo_atual TEXT",
@@ -69,7 +68,6 @@ def init_db():
         )
     """)
 
-    # Garante habilidade única por pessoa em bancos criados antes dessa regra existir
     connection.execute("""
         CREATE UNIQUE INDEX IF NOT EXISTS idx_pessoa_habilidades_unica
         ON pessoa_habilidades(usuario_id, habilidade_id)
@@ -93,14 +91,11 @@ def init_db():
         )
     """)
 
-    # Garante habilidade desejada única por pessoa em bancos criados antes dessa regra existir
     connection.execute("""
         CREATE UNIQUE INDEX IF NOT EXISTS idx_habilidades_desejadas_unica
         ON habilidades_desejadas(usuario_id, habilidade_id)
     """)
 
-
-    # 4. Inserção de categorias
     categorias = [
         ("Linguagem de Programação",),
         ("Banco de Dados",),
@@ -120,8 +115,6 @@ def init_db():
         SELECT id, categoria
         FROM categorias
     """).fetchall()
-
-    # Inserção das habilidades
     habilidades = [
         # Linguagens de Programação
         ("Python", 1, 120),

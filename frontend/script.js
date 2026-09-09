@@ -127,12 +127,9 @@ async function carregarPessoas() {
 
 function filtrarPessoas() {
 
-    const termo =
-        document.getElementById('input-busca-pessoa')
-            .value.trim().toLowerCase();
+    const termo = document.getElementById('input-busca-pessoa').value.trim().toLowerCase();
 
-    const linhas =
-        document.querySelectorAll('#lista-pessoas tr[data-nome]');
+    const linhas = document.querySelectorAll('#lista-pessoas tr[data-nome]');
 
     linhas.forEach(linha => {
         const corresponde =
@@ -167,11 +164,9 @@ async function carregarHabilidadesCatalogo() {
         container.innerHTML =
             habilidades.map(
                 habilidade => `
-
                     <tr>
                         <td>${habilidade.nome}</td>
                         <td>${CATEGORIAS_HABILIDADE[habilidade.categoria_id] || '-'}</td>
-                        <td>${habilidade.horas_por_nivel} h</td>
                         <td>${habilidade.horas_por_nivel} h</td>
                     </tr>
 
@@ -189,16 +184,11 @@ async function carregarHabilidadesCatalogo() {
             </tr>
         `;
 
-        console.error(
-            'Erro:',
-            erro
-        );
-
+        console.error('Erro:', erro);
     }
 }
 
 async function salvarPessoa() {
-
     const nome = document.getElementById('input-nome').value.trim();
     const email = document.getElementById('input-email').value.trim();
     const idade = document.getElementById('input-idade').value;
@@ -394,14 +384,9 @@ function abrirModal(tipo, pessoa, habilidadesExistentes) {
         conteudo.innerHTML = `
 
             <div class="form-grupo">
-
-                <label
-                    class="form-label"
-                    for="input-nome-editar"
-                >
+                <label class="form-label" for="input-nome-editar">
                     Nome
                 </label>
-
                 <input
                     type="text"
                     id="input-nome-editar"
@@ -409,19 +394,14 @@ function abrirModal(tipo, pessoa, habilidadesExistentes) {
                     value="${pessoa.nome}"
                     maxlength="100"
                 >
-
             </div>
-
-
             <div class="form-grupo">
-
                 <label
                     class="form-label"
                     for="input-email-editar"
                 >
                     E-mail
                 </label>
-
                 <input
                     type="email"
                     id="input-email-editar"
@@ -429,16 +409,9 @@ function abrirModal(tipo, pessoa, habilidadesExistentes) {
                     value="${pessoa.email}"
                     maxlength="150"
                 >
-
             </div>
-
-
             <div class="form-grupo">
-
-                <label
-                    class="form-label"
-                    for="input-idade-editar"
-                >
+                <label class="form-label" for="input-idade-editar">
                     Idade
                 </label>
 
@@ -764,22 +737,14 @@ function abrirModal(tipo, pessoa, habilidadesExistentes) {
 }
 
 async function carregarHabilidades(excluirIds = []) {
-
     const select = document.getElementById('select-habilidade');
-
-    if (!select) {
-        return;
-    }
-
+    if (!select) {return;}
     try {
         const resposta = await fetch(API_HABILIDADES);
-
         if (!resposta.ok) {
             throw new Error('Erro ao carregar habilidades');
         }
-
         const habilidades = await resposta.json();
-
         habilidades
             .filter(habilidade => !excluirIds.includes(habilidade.id))
             .forEach(habilidade => {
@@ -796,13 +761,8 @@ async function carregarHabilidades(excluirIds = []) {
 }
 
 function renderHabilidadesExistentes(lista) {
-
     const container = document.getElementById('lista-habilidades-existentes');
-
-    if (!container) {
-        return;
-    }
-
+    if (!container) { return }
     if (lista.length === 0) {
         container.innerHTML = `
             <p class="lista-vazia">
@@ -871,86 +831,34 @@ function adicionarHabilidade() {
     }
 
 
-    const habilidadeNome =
-        selectHabilidade
-            .options[
-            selectHabilidade.selectedIndex
-        ]
-            .text;
-
-
-    const proficienciaTexto =
-        selectProficiencia
-            .options[
-            selectProficiencia.selectedIndex
-        ]
-            .text;
-
+    const habilidadeNome = selectHabilidade.options[selectHabilidade.selectedIndex].text;
+    const proficienciaTexto = selectProficiencia.options[selectProficiencia.selectedIndex].text;
 
     habilidadesSelecionadas.push({
-
-        habilidade_id:
-            habilidadeId,
-
-        nivel_atual:
-            nivelAtual,
-
-        nome:
-            habilidadeNome,
-
-        proficienciaTexto:
-            proficienciaTexto
-
+        habilidade_id: habilidadeId,
+        nivel_atual: nivelAtual,
+        nome: habilidadeNome,
+        proficienciaTexto: proficienciaTexto
     });
 
-
     renderizarHabilidadesSelecionadas();
-
-
-    selectHabilidade.value =
-        '';
-
-    selectProficiencia.value =
-        '1';
-
-
-    erroEl.textContent =
-        '';
-
-    erroEl.classList.remove(
-        'ativo'
-    );
-
+    selectHabilidade.value = '';
+    selectProficiencia.value = '1';
+    erroEl.textContent = '';
+    erroEl.classList.remove('ativo');
 }
 
 function removerHabilidade(index) {
-
     habilidadesSelecionadas.splice(index, 1);
-
-
     renderizarHabilidadesSelecionadas();
-
 }
 
 function renderizarHabilidadesSelecionadas() {
+    const container = document.getElementById('lista-habilidades-selecionadas');
 
-    const container =
-        document.getElementById(
-            'lista-habilidades-selecionadas'
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    if (
-        habilidadesSelecionadas.length === 0
-    ) {
-
+    if (!container) { return }
+    if ( habilidadesSelecionadas.length === 0) {
         container.innerHTML = `
-
             <p class="lista-vazia">
                 Nenhuma habilidade adicionada ainda.
             </p>
@@ -961,8 +869,7 @@ function renderizarHabilidadesSelecionadas() {
     }
 
 
-    container.innerHTML =
-        habilidadesSelecionadas
+    container.innerHTML = habilidadesSelecionadas
             .map(
                 (habilidade, index) => `
 
@@ -977,7 +884,7 @@ function renderizarHabilidadesSelecionadas() {
                             class="btn-remover-habilidade"
                             onclick="removerHabilidade(${index})"
                         >
-                            ×
+                            x
                         </button>
 
                     </div>
@@ -1013,35 +920,15 @@ async function carregarPerfilRoadmap(
     usuarioId
 ) {
 
-    const container =
-        document.getElementById(
-            'roadmap-perfil'
-        );
-
-
+    const container = document.getElementById('roadmap-perfil');
     try {
-
-        const resposta =
-            await fetch(
-                API_PESSOAS
-            );
-
-
+        const resposta = await fetch(API_PESSOAS);
         if (!resposta.ok) {
-
-            throw new Error(
-                'Erro ao carregar pessoas'
-            );
-
+            throw new Error( 'Erro ao carregar pessoas' );
         }
 
-
-        const pessoas =
-            await resposta.json();
-
-
-        const usuario =
-            pessoas.find(
+        const pessoas = await resposta.json();
+        const usuario = pessoas.find(
                 pessoa =>
                     pessoa.id ===
                     usuarioId
@@ -1173,41 +1060,21 @@ async function carregarHabilidadesAtuais(usuarioId) {
 
 async function carregarHabilidadesRoadmap() {
 
-    const select =
-        document.getElementById(
-            'select-habilidade-desejada'
-        );
-
-
+    const select = document.getElementById('select-habilidade-desejada');
     select.innerHTML = `
-
         <option value="">
             Selecione uma habilidade
         </option>
 
     `;
-
-
-    const resposta =
-        await fetch(
-            API_HABILIDADES
-        );
-
-
+    const resposta = await fetch( API_HABILIDADES );
     if (!resposta.ok) {
 
-        throw new Error(
-            'Erro ao carregar habilidades'
-        );
-
+        throw new Error( 'Erro ao carregar habilidades');
     }
 
-
-    const habilidades =
-        await resposta.json();
-
+    const habilidades = await resposta.json();
     habilidadesCatalogo = habilidades;
-
     habilidades.forEach(
         habilidade => {
 
@@ -1216,19 +1083,9 @@ async function carregarHabilidadesRoadmap() {
                     'option'
                 );
 
-
-            option.value =
-                habilidade.id;
-
-
-            option.textContent =
-                habilidade.nome;
-
-
-            select.appendChild(
-                option
-            );
-
+            option.value = habilidade.id;
+            option.textContent = habilidade.nome;
+            select.appendChild( option );
         }
     );
 

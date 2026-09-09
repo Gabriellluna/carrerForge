@@ -4,8 +4,6 @@ from services.pessoa_habilidades import (
     criar_pessoa_habilidade
 )
 
-# APIRouter agrupa as rotas num único objeto.
-# Depois, no main.py, incluirmos esse router na aplicação.
 router = APIRouter()
 
 @router.get("/pessoa-habilidades/{usuario_id}")

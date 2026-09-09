@@ -7,8 +7,6 @@ from services.pessoa_service import (
     deletar_pessoa,
 )
 
-# APIRouter agrupa as rotas num único objeto.
-# Depois, no main.py, incluirmos esse router na aplicação.
 router = APIRouter()
 
 @router.get("/pessoas")
